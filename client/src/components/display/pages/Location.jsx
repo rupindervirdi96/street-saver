@@ -31,6 +31,7 @@ const SearchBar = styled.input`
   border: none;
   outline: none;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 999;
 `;
 
 const BtnStyles = styled.button`
@@ -48,13 +49,19 @@ const BtnStyles = styled.button`
 const Location = () => {
   const dispatch = useDispatch();
 
+  const {
+    app: {
+      form: { location },
+    },
+  } = useSelector((state) => ({
+    app: state.app,
+  }));
+
   const [address, setAddress] = useState("");
 
-  const [markers, setMarkers] = useState([]);
-
   const [currMarker, setCurrMarker] = useState({
-    lat: 45.4972159,
-    lng: -73.6103642,
+    lat: 0,
+    lng: 0,
   });
 
   const [viewport, setViewport] = useState({
@@ -65,54 +72,49 @@ const Location = () => {
     width: "100%",
   });
 
-  // const [longitude, setLongitude] = useState(-73.6103642);
-  // const [latitude, setLatitude] = useState(45.4972159);
-
-  const onClick = async (e) => {
-    const data = await dispatch(
-      getAddress({ lat: e.lngLat[1], lng: e.lngLat[0] })
-    );
-    document.querySelector(".search-bar").value = data.address;
-    dispatch({ type: SET_LOCATION, payload: data });
+  const onMapClickHanler = (e) => {
+    dispatch(getAddress({ lat: e.lngLat[1], lng: e.lngLat[0] }, "click"));
   };
 
-  const onChange = async (e) => {
-    setAddress(e.target.value);
+  const onSearchHandler = (e) => setAddress(e.target.value);
 
-    if (e.key === "Enter") {
-      const mapValues = await dispatch(getLocation(address));
-      dispatch({ type: SET_LOCATION, payload: mapValues });
+  const onSearchEnter = (e) => {
+    if (e.code === "Enter") dispatch(getAddress(address, "search"));
+  };
 
-      // setLongitude(mapValues.coordinates.lng);
-
-      // setLatitude(mapValues.coordinates.lat);
-
-      setCurrMarker(mapValues.coordinates);
-
-      setAddress(mapValues.address);
-
-      console.log(mapValues);
+  useEffect(() => {
+    if (location?.coordinates) {
+      setCurrMarker(location?.coordinates);
+      setViewport({
+        ...viewport,
+        latitude: location?.coordinates.lat,
+        longitude: location?.coordinates.lng,
+      });
     }
-  };
+    if (location?.address) setAddress(location?.address);
+  }, [location]);
 
   return (
     <LocationStyles>
       <h1>Where is the issue?</h1>
       <p>Enter the address where you saw the problem..</p>
-      <ReactMapGL
-        style={{ textAlign: "left" }}
-        onViewportChange={(viewport) => {
-          setViewport(viewport);
-        }}
-        mapStyle="mapbox://styles/rupindervirdi/ckgrijmq10cgt19lkq0lqh8ww"
-        onClick={onClick}
-      >
+      <div>
         <SearchBar
           className="search-bar"
-          onKeyDown={onChange}
+          onChange={onSearchHandler}
+          onKeyPress={onSearchEnter}
           placeholder="Address here"
+          value={address || ""}
         />
-        {/* {markers.map((marker, i) => {
+        <ReactMapGL
+          {...viewport}
+          style={{ textAlign: "left" }}
+          onViewportChange={setViewport}
+          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_API}
+          mapStyle={process.env.REACT_APP_MAPBOX_STYLE}
+          onClick={onMapClickHanler}
+        >
+          {/* {markers.map((marker, i) => {
           return (
             <Marker latitude={marker.lat} currMarker={marker.lng}>
               <BtnStyles>
@@ -121,12 +123,16 @@ const Location = () => {
             </Marker>
           );
         })} */}
-        <Marker latitude={currMarker.lat} longitude={currMarker.lng}>
-          {/* <BtnStyles> */}
-          <img src={markerImg} height="20px" width="20px" alt="marker" />
-          {/* </BtnStyles> */}
-        </Marker>
-      </ReactMapGL>
+
+          {currMarker.lat !== 0 && currMarker.lng !== 0 ? (
+            <Marker latitude={currMarker.lat} longitude={currMarker.lng}>
+              <BtnStyles>
+                <img src={markerImg} height="20px" width="20px" alt="marker" />
+              </BtnStyles>
+            </Marker>
+          ) : null}
+        </ReactMapGL>
+      </div>
     </LocationStyles>
   );
 };

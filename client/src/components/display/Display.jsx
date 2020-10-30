@@ -36,10 +36,27 @@ const Display = () => {
   }));
 
   const nextTab = () => {
-    if (form.issue !== null) {
+    const msg =
+      selectedTab === 0
+        ? "Please select a type of issue"
+        : selectedTab === 1
+        ? "Please select an address"
+        : "Fill the Information";
+
+    const checkData =
+      form?.details?.email !== "" &&
+      form?.details?.fname !== "" &&
+      form?.details?.lname !== "" &&
+      form?.details?.description !== "";
+
+    if (
+      (form.issue !== null && selectedTab === 0) ||
+      (form.location !== null) & (selectedTab === 1) ||
+      checkData & (selectedTab === 2)
+    ) {
       dispatch({ type: CHANGE_TAB, payload: selectedTab + 1 });
     } else {
-      alert("Please select a type of issue");
+      alert(msg);
     }
   };
 

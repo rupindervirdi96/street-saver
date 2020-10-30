@@ -11,7 +11,7 @@ const initialState = {
   selectedTab: 0,
   form: {
     issue: null,
-    location: {},
+    location: null,
     details: DETAILS,
   },
 };
