@@ -16,7 +16,8 @@ const sendEmail = async (data) => {
         </h1>
         <div style="margin:auto; width:90%">
             <h1 style="text-align:left">Issue with ${issue}.</h1>
-            <h3 style="text-align:left;">Reported By: ${fName} ${lName}</h3>
+            <h3 style="text-align:left;">Reported by ${fName} ${lName}</h3>
+            <h3 style="text-align:left;">Email ${email}</h3>
             <h4 style="text-align:left;font-weight: normal;">${description}</h4>
             <hr style="" />
             <div style="text-align: left">
@@ -35,7 +36,6 @@ const sendEmail = async (data) => {
     </div>
     </div>
     `;
-
     const transporter = nodemailer.createTransport({
       service: "hotmail",
       auth: {
@@ -47,14 +47,20 @@ const sendEmail = async (data) => {
 
     const mailOptions = {
       from: "virdi.rocking_96@outlook.com", // sender address
-      to: "rupindervirdi96@outlook.com", // list of receivers
+      to: "sal@streetlogix.com", // list of receivers
       subject: "Report Issue", // subject line
       html: message,
     };
 
-    transporter.sendMail(mailOptions, async (error, info) => {
-      if (error) return false;
+    await transporter.sendMail(mailOptions, async (error, info) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(info);
+      }
     });
+
+    return true;
   } catch (error) {
     console.log(error.message);
   }

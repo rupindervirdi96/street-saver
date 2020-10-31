@@ -36,17 +36,33 @@ export const getAddress = (data, type) => async (dispatch) => {
 };
 
 export const reportIssue = (data) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
   try {
-    const report = (await axios.post("http://localhost:1000/api/report", data))
-      .data;
+    const report = (
+      await axios.post("http://localhost:5000/api/report", data, config)
+    ).data;
 
-    dispatch({
-      type: ENABLE_ALERT_MESSAGE,
-      payload: {
-        message: report.msg,
-        type: "success",
-      },
-    });
+    if (report.success) {
+      dispatch({
+        type: ENABLE_ALERT_MESSAGE,
+        payload: {
+          message: report.msg,
+          type: "success",
+        },
+      });
+    } else {
+      dispatch({
+        type: ENABLE_ALERT_MESSAGE,
+        payload: {
+          message: report.msg,
+          type: "error",
+        },
+      });
+    }
   } catch (error) {
     console.log(error.message);
   }

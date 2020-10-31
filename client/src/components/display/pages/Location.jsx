@@ -107,16 +107,6 @@ const Location = () => {
           mapStyle={process.env.REACT_APP_MAPBOX_STYLE}
           onClick={onMapClickHanler}
         >
-          {/* {markers.map((marker, i) => {
-          return (
-            <Marker latitude={marker.lat} currMarker={marker.lng}>
-              <BtnStyles>
-                <img src={markerImg} alt="marker" />
-              </BtnStyles>
-            </Marker>
-          );
-        })} */}
-
           {currMarker.lat !== 0 && currMarker.lng !== 0 ? (
             <Marker latitude={currMarker.lat} longitude={currMarker.lng}>
               <BtnStyles>

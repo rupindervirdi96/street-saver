@@ -8,10 +8,10 @@ router.post("/", async (req, res) => {
     const { issue, location, details } = req.body;
     const { fName, lName, email, description } = details;
 
-    const sent = sendEmail(req.body);
-
+    const sent = await sendEmail(req.body);
+    console.log(sent);
     if (sent) {
-      var report = new Report({
+      let report = new Report({
         fName,
         lName,
         email,
@@ -24,7 +24,7 @@ router.post("/", async (req, res) => {
 
       return res.json({ success: true, msg: "Reported Successfully." });
     }
-    return res.json({ msg: "Something went wrong." });
+    return res.json({ success: false, msg: "Something went wrong." });
   } catch (error) {
     res.json({ msg: error.message });
   }
