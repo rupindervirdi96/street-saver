@@ -49,9 +49,7 @@ const Issue = () => {
   return (
     <IssueStyles>
       <h1>What do you want to report?</h1>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, voluptas.
-      </p>
+      <p>Select one of the below to proceed...</p>
       <div className="option-wrapper">
         <Option
           onClick={() => selectHandler("potholes")}
