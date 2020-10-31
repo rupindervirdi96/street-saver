@@ -6,8 +6,8 @@ import Details from "./pages/Details";
 import Finish from "./pages/Finish";
 import { useDispatch, useSelector } from "react-redux";
 import { CHANGE_TAB, ENABLE_ALERT_MESSAGE } from "../../actions/types";
-import { reportIssue } from "../../actions/app.action";
 import { Button } from "@material-ui/core";
+import { reportIssue } from "../../actions/app.action";
 
 const DisplayStyles = styled.div`
   width: 600px;
@@ -55,27 +55,22 @@ const Display = () => {
       checkData & (selectedTab === 2)
     ) {
       dispatch({ type: CHANGE_TAB, payload: selectedTab + 1 });
+
+      if (checkData & (selectedTab === 2)) dispatch(reportIssue(form));
     } else {
-      alert(msg);
+      // alert(msg);
+      dispatch({
+        type: ENABLE_ALERT_MESSAGE,
+        payload: {
+          message: msg,
+          type: "error",
+        },
+      });
     }
   };
 
   const backTab = () => {
     dispatch({ type: CHANGE_TAB, payload: selectedTab - 1 });
-  };
-
-  const submitHandler = () => {
-    console.log(form);
-    var fName = document.querySelector(".input-fName").value;
-    var lName = document.querySelector(".input-lName").value;
-    var email = document.querySelector(".input-email").value;
-    var description = document.querySelector(".input-description").value;
-    if (fName == "" || lName == "" || email == "" || description == "") {
-      alert("One or more fields are empty.");
-    } else {
-      dispatch(reportIssue(form));
-    }
-    nextTab();
   };
 
   return (
@@ -98,15 +93,9 @@ const Display = () => {
                 Back
               </Button>
             ) : null}
-            {selectedTab === 2 ? (
-              <Button size="large" variant="outlined" onClick={submitHandler}>
-                Submit
-              </Button>
-            ) : (
-              <Button size="large" variant="outlined" onClick={nextTab}>
-                Next
-              </Button>
-            )}
+            <Button size="large" variant="outlined" onClick={nextTab}>
+              {selectedTab === 2 ? "Submit" : "Next"}
+            </Button>
           </>
         ) : null}
       </div>

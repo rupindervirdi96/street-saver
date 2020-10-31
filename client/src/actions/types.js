@@ -6,3 +6,4 @@ export const ENABLE_ALERT_MESSAGE = "ENABLE_ALERT_MESSAGE";
 export const SUBMIT_REPORT = "SUBMIT_REPORT";
 export const UPDATE_DETAILS = "UPDATE_DETAILS";
 export const SET_LOCATION = "SET_LOCATION";
+export const RESET = "RESET";

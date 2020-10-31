@@ -1,9 +1,9 @@
-import { ENABLE_ALERT_MESSAGE, DISABLE_ALERT_MESSAGE } from '../actions/types';
+import { ENABLE_ALERT_MESSAGE, DISABLE_ALERT_MESSAGE } from "../actions/types";
 
 const initialState = {
   show: false,
-  message: '',
-  type: '',
+  message: "",
+  type: "",
 };
 
 const alert = (state = initialState, { type, payload }) => {
@@ -19,8 +19,8 @@ const alert = (state = initialState, { type, payload }) => {
       return {
         ...state,
         show: false,
-        message: '',
-        type: '',
+        message: "",
+        type: "",
       };
     default:
       return state;

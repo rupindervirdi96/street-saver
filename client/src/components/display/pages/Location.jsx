@@ -1,13 +1,9 @@
 import React, { memo, useState } from "react";
 import styled from "styled-components";
-import ReactMapGL, { Marker, Popup } from "react-map-gl";
-import { TextField, CircularProgress } from "@material-ui/core";
-import axios from "axios";
+import ReactMapGL, { Marker } from "react-map-gl";
 import markerImg from "../../../assets/marker.png";
-import { useDebugValue } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getLocation, getAddress } from "../../../actions/app.action";
-import { SET_LOCATION } from "../../../actions/types";
+import { getAddress } from "../../../actions/app.action";
 import { useEffect } from "react";
 
 const LocationStyles = styled.div`
@@ -59,10 +55,7 @@ const Location = () => {
 
   const [address, setAddress] = useState("");
 
-  const [currMarker, setCurrMarker] = useState({
-    lat: 0,
-    lng: 0,
-  });
+  const [currMarker, setCurrMarker] = useState({ lat: 0, lng: 0 });
 
   const [viewport, setViewport] = useState({
     latitude: 45.4972159,

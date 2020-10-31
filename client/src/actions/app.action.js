@@ -1,4 +1,4 @@
-import { SET_LOCATION } from "./types";
+import { ENABLE_ALERT_MESSAGE, SET_LOCATION } from "./types";
 
 const axios = require("axios");
 
@@ -8,22 +8,19 @@ export const getAddress = (data, type) => async (dispatch) => {
 
     if (type === "click") {
       res = await axios.get(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${data.lat},${data.lng}`,
-        { params: { key: "AIzaSyA81QSQg_O_MsAxRcW5u3rIagKmtO1jZuQ" } }
+        `${process.env.REACT_APP_MAPS_API_URL}?latlng=${data.lat},${data.lng}`,
+        { params: { key: process.env.REACT_APP_MAPS_API } }
       );
     }
 
     if (type === "search") {
-      res = await axios.get(
-        "https://maps.googleapis.com/maps/api/geocode/json",
-        {
-          params: {
-            address: data,
-            key: "AIzaSyA81QSQg_O_MsAxRcW5u3rIagKmtO1jZuQ",
-            region: "CA",
-          },
-        }
-      );
+      res = await axios.get(process.env.REACT_APP_MAPS_API_URL, {
+        params: {
+          address: data,
+          key: process.env.REACT_APP_MAPS_API,
+          region: process.env.REACT_APP_MAPS_REGION,
+        },
+      });
     }
 
     const properAddress = res.data.results[0].formatted_address;
@@ -40,12 +37,16 @@ export const getAddress = (data, type) => async (dispatch) => {
 
 export const reportIssue = (data) => async (dispatch) => {
   try {
-    const report = await axios.post(
-      "http://localhost:1000/api/report/new",
-      data
-    );
-    if (!report.success) return false;
-    else return true;
+    const report = (await axios.post("http://localhost:1000/api/report", data))
+      .data;
+
+    dispatch({
+      type: ENABLE_ALERT_MESSAGE,
+      payload: {
+        message: report.msg,
+        type: "success",
+      },
+    });
   } catch (error) {
     console.log(error.message);
   }

@@ -2,7 +2,6 @@ import React, { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { SELECT_ISSUE } from "../../../actions/types";
-
 import { ReactComponent as BumpsSVG } from "../../../assets/bump.svg";
 import { ReactComponent as PotholeSVG } from "../../../assets/potholes.svg";
 

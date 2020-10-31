@@ -3,7 +3,7 @@ const router = express.Router();
 const Report = require("../models/report.model");
 const sendEmail = require("../services/nodemailer");
 
-router.post("/new", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const { issue, location, details } = req.body;
     const { fName, lName, email, description } = details;
@@ -20,7 +20,7 @@ router.post("/new", async (req, res) => {
         description,
       });
 
-      const newReport = await report.save();
+      await report.save();
 
       return res.json({ success: true, msg: "Reported Successfully." });
     }

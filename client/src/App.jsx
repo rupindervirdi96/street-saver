@@ -4,9 +4,7 @@ import Display from "./components/display/Display";
 import "./App.css";
 import styled from "styled-components";
 import Logo from "./assets/logo.png";
-import { Provider } from "react-redux";
-import store from "./store";
-import Snackbar from "./components/common/Snackbar";
+import Alert from "./components/common/Alert";
 
 const AppStyles = styled.div`
   margin: auto;
@@ -21,12 +19,14 @@ const AppStyles = styled.div`
 
 const App = () => {
   return (
-    <AppStyles>
-      <img src={Logo} className="logo" />
-      <Navbar />
-      <Display />
-      <Snackbar />
-    </AppStyles>
+    <>
+      <AppStyles>
+        <img src={Logo} className="logo" />
+        <Navbar />
+        <Display />
+      </AppStyles>
+      <Alert />
+    </>
   );
 };
 

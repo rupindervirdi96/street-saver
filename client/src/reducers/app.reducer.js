@@ -4,6 +4,7 @@ import {
   SUBMIT_REPORT,
   UPDATE_DETAILS,
   SET_LOCATION,
+  RESET,
 } from "../actions/types";
 import { DETAILS } from "../constants";
 
@@ -45,6 +46,17 @@ const app = (state = initialState, { type, payload }) => {
       return {
         ...state,
         form: { ...state.form, location: payload },
+      };
+    }
+    case RESET: {
+      return {
+        ...state,
+        selectedTab: 0,
+        form: {
+          issue: null,
+          location: null,
+          details: DETAILS,
+        },
       };
     }
     default:
