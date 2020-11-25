@@ -56,7 +56,7 @@ const Issue = () => {
           selected={form.issue === "potholes"}
         >
           <PotholeSVG />
-          <span>Potholes</span>
+          <span >Potholes</span>
         </Option>
         <Option
           onClick={() => selectHandler("bumps")}
