@@ -37,18 +37,18 @@ const sendEmail = async (data) => {
     </div>
     `;
     const transporter = nodemailer.createTransport({
-      service: "hotmail",
+      service: "gmail",
       auth: {
-        user: "virdi.rocking_96@outlook.com",
+        user: "singhtest57@gmail.com",
         pass: "zxhbk546",
       },
       tls: { rejectUnauthorized: false },
     });
 
     const mailOptions = {
-      from: "virdi.rocking_96@outlook.com", // sender address
-      to: "rupindervirdi96@outlook.com", // list of receivers
-      subject: "Report Issue", // subject line
+      from: "singhtest57@gmail.com", // sender address
+      to: "rupindervirdi96@gmail.com", // list of receivers
+      subject: "New Complaint Reported.", // subject line
       html: message,
     };
 
