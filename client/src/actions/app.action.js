@@ -43,7 +43,7 @@ export const reportIssue = (data) => async (dispatch) => {
   };
   try {
     const report = (
-      await axios.post("https://street-saver.onrender.com/", data, config)
+      await axios.post("https://street-saver.onrender.com", data, config)
     ).data;
 
     if (report.success) {
