@@ -42,7 +42,7 @@ export const reportIssue = (data) => async (dispatch) => {
     },
   };
   try {
-    const report = await axios.post("/", data).data;
+    const report = await axios.post("/api/report/", data).data;
 
     if (report.success) {
       dispatch({
