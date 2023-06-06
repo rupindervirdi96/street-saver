@@ -36,16 +36,16 @@ export const getAddress = (data, type) => async (dispatch) => {
 };
 
 export const reportIssue = (data) => async (dispatch) => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
+  // const config = {
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     "Access-Control-Allow-Origin": "https://street-saver.onrender.com",
+  //   },
+  // };
   try {
     const report = await axios.post(
       "https://street-saver.onrender.com/api/report",
-      data,
-      config
+      data
     ).data;
 
     if (report.success) {
