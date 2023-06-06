@@ -46,7 +46,7 @@ const sendEmail = async (data) => {
     });
 
     const mailOptions = {
-      from: "singhtest57@gmail.com", // sender address
+      from: `"Street-saver" singhtest57@gmail.com`, // sender address
       to: "rupindervirdi96@gmail.com", // list of receivers
       subject: "New Complaint Reported.", // subject line
       html: message,
