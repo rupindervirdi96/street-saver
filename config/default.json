@@ -1,4 +1,4 @@
 {
   "mongoURI": "mongodb+srv://rupindervirdi:zxhbk546@cluster0.zgnqm.mongodb.net/street-saver?retryWrites=true&w=majority",
-  "mongoURI2": "mongodb+srv://rupindervirdi96:zxhbk546@cluster0.j4t5dim.mongodb.net/"
+  "mongoURI2": "mongodb+srv://rupindervirdi96:zxhbk546@cluster0.j4t5dim.mongodb.net/street-saver?retryWrites=true&w=majority"
 }
